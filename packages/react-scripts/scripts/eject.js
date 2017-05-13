@@ -56,6 +56,7 @@ prompt(
     path.join('config', 'polyfills.js'),
     path.join('config', 'webpack.config.dev.js'),
     path.join('config', 'webpack.config.prod.js'),
+    path.join('config', 'webpackDevServer.config.js'),
     path.join('config', 'jest', 'cssTransform.js'),
     path.join('config', 'jest', 'fileTransform.js'),
     path.join('scripts', 'build.js'),
