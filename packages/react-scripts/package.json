@@ -1,6 +1,6 @@
 {
   "name": "mornya-react-scripts",
-  "version": "1.0.16",
+  "version": "1.0.28",
   "description": "Configuration and scripts for Create React App.",
   "repository": "mornya/create-react-app",
   "license": "BSD-3-Clause",
@@ -32,7 +32,6 @@
   ],
   "dependencies": {
     "autoprefixer": "^7.0.1",
-    "axios": "^0.16.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-jest": "^20.0.1",
@@ -87,8 +86,9 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0"
+    "prop-types": "^15.5.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
   },
   "optionalDependencies": {
     "fsevents": "1.0.17"
