@@ -64,7 +64,16 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: {
+    app: [require.resolve('./polyfills'), paths.appIndexJs],
+    'vendor-react': ['react', 'react-dom', 'react-router'],
+    'vendor-redux': [
+      'redux',
+      'react-redux',
+      'redux-thunk',
+      'react-router-redux',
+    ],
+  },
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -84,7 +93,11 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: [
+      paths.appSrc /* added by mornya */,
+      'node_modules',
+      paths.appNodeModules,
+    ].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),

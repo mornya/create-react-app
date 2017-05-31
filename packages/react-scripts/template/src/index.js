@@ -6,10 +6,13 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import routes from './routes';
-import registerServiceWorker from './registerServiceWorker';
-import './index.css';
+import 'normalize.css';
+// import 'reset.scss';
+
+document.querySelector('html').setAttribute('ua', navigator.userAgent);
 
 const configureStore = initialState => {
   const middlewares = [thunk];
@@ -21,8 +24,9 @@ const configureStore = initialState => {
     window.devToolsExtension ? window.devToolsExtension() : f => f
   );
 
+  // HMR Store
   if (module.hot) {
-    module.hot.accept('./reducers', () => {
+    module.hot.accept(() => {
       const nextRootReducer = require('./reducers').default;
       store.replaceReducer(nextRootReducer);
     });
@@ -32,29 +36,22 @@ const configureStore = initialState => {
 };
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
-const rootEl = document.getElementById('root');
-
-// store를 props로 넘겨받는 이유 (https://github.com/reactjs/react-redux/issues/259)
-ReactDOM.render(
-  <AppContainer>
-    <Provider store={store}>
-      <Router history={history} routes={routes} />
-    </Provider>
-  </AppContainer>,
-  rootEl
-);
+const renderAppContainer = () => {
+  // store를 props로 넘겨받는 이유 (https://github.com/reactjs/react-redux/issues/259)
+  ReactDOM.render(
+    <AppContainer>
+      <Provider store={store}>
+        <Router history={history} routes={routes} />
+      </Provider>
+    </AppContainer>,
+    document.getElementById('root')
+  );
+};
 
 registerServiceWorker();
+renderAppContainer();
 
 if (module.hot) {
-  module.hot.accept(() => {
-    ReactDOM.render(
-      <AppContainer>
-        <Provider store={store}>
-          <Router routes={routes} />
-        </Provider>
-      </AppContainer>,
-      rootEl
-    );
-  });
+  // HMR AppContainer
+  module.hot.accept(renderAppContainer);
 }

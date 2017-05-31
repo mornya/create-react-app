@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router';
 // import { Route, IndexRoute } from 'react-router';
 
-import App from './App';
+import App from 'containers/App';
 
 /*
  * For example,
@@ -13,6 +13,4 @@ import App from './App';
  *     <Route path="about" component={AboutPage}/>
  * </Route>
  */
-export default (
-    <Route path="/" component={App} />
-);
+export default <Route path="/" component={App} />;

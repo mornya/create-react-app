@@ -1,6 +1,6 @@
 {
   "name": "mornya-react-scripts",
-  "version": "1.1.2",
+  "version": "1.1.6",
   "description": "Configuration and scripts for Create React App.",
   "repository": "mornya/create-react-app",
   "license": "BSD-3-Clause",
@@ -20,14 +20,6 @@
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
-  "serverProxy": [
-    {
-      "ctx": ["/api/**"],
-      "opt": {
-        "target": "http://local.mornya.com:8088"
-      }
-    }
-  ],
   "dependencies": {
     "autoprefixer": "7.1.0",
     "babel-core": "6.24.1",
