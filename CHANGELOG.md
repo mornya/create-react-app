@@ -1,3 +1,246 @@
+## 1.0.7 (May 27, 2017)
+
+#### :bug: Bug Fix
+
+* `react-scripts`
+
+  * [#2382](https://github.com/facebookincubator/create-react-app/pull/2382) Consistently set environment variables. ([@gaearon](https://github.com/gaearon))
+  * [#2379](https://github.com/facebookincubator/create-react-app/pull/2379) Temporarily disable `comparisons` feature in uglify compression. ([@davidascher](https://github.com/davidascher))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#2383](https://github.com/facebookincubator/create-react-app/pull/2383) Update webpack to 2.6.1. ([@gaearon](https://github.com/gaearon))
+  * [#2349](https://github.com/facebookincubator/create-react-app/pull/2349) Update webpack to v2.6.0. ([@ingro](https://github.com/ingro))
+  * [#2351](https://github.com/facebookincubator/create-react-app/pull/2351) Removed the overriding of `reduce_vars` since webpack v2.6.0 included fix of Uglify. ([@Zaccc123](https://github.com/Zaccc123))
+
+* `react-dev-utils`, `react-scripts`
+
+  * [#2361](https://github.com/facebookincubator/create-react-app/pull/2361) Print file sizes with correct build folder path. ([@fezhengjin](https://github.com/fezhengjin))
+
+#### :memo: Documentation
+
+* `react-scripts`
+
+  * [#2372](https://github.com/facebookincubator/create-react-app/pull/2372) Update README.md for `now` deployments. ([@purplecones](https://github.com/purplecones))
+  * [#2350](https://github.com/facebookincubator/create-react-app/pull/2350) Fix broken links. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 6
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- David Ascher ([davidascher](https://github.com/davidascher))
+- Emanuele Ingrosso ([ingro](https://github.com/ingro))
+- Jin Zheng ([fezhengjin](https://github.com/fezhengjin))
+- Mirza Joldic ([purplecones](https://github.com/purplecones))
+- Zac Kwan ([Zaccc123](https://github.com/Zaccc123))
+
+### Migrating from 1.0.6 to 1.0.7
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.7
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.7
+```
+
+## 1.0.6 (May 24, 2017)
+
+#### :bug: Bug Fix
+
+* `eslint-config-react-app`, `react-error-overlay`, `react-scripts`
+
+  * [#2346](https://github.com/facebookincubator/create-react-app/pull/2346) Resolve Flow errors in an ESLint plugin. ([@iainbeeston](https://github.com/iainbeeston))
+
+* `react-dev-utils`
+
+  * [#2332](https://github.com/facebookincubator/create-react-app/pull/2332) Fix proxying issues with backends that don't support IPv6. ([@Timer](https://github.com/Timer))
+
+#### :nail_care: Enhancement
+* `react-scripts`
+
+  * [#2347](https://github.com/facebookincubator/create-react-app/pull/2347) Don't precache `/__*` URLs to fix Firebase hosting. ([@ryansully](https://github.com/ryansully))
+
+#### :memo: Documentation
+
+* README
+
+  * [#2334](https://github.com/facebookincubator/create-react-app/pull/2334) Add missing files to the list. ([@jesselpalmer](https://github.com/jesselpalmer))
+
+#### Committers: 4
+- Iain Beeston ([iainbeeston](https://github.com/iainbeeston))
+- Jesse Palmer ([jesselpalmer](https://github.com/jesselpalmer))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Ryan Sullivan ([ryansully](https://github.com/ryansully))
+
+### Migrating from 1.0.5 to 1.0.6
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.6
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.6
+```
+
+## 1.0.5 (May 22, 2017)
+
+#### :bug: Bug Fix
+* `react-dev-utils`, `react-scripts`
+
+  * [#2326](https://github.com/facebookincubator/create-react-app/pull/2326) Files in `public/` folder should not be requested through proxy. ([@gaearon](https://github.com/gaearon))
+
+#### :nail_care: Enhancement
+* `react-dev-utils`
+
+  * [#2327](https://github.com/facebookincubator/create-react-app/pull/2327) Limit console warnings to 5 files at most. ([@gaearon](https://github.com/gaearon))
+
+* `eslint-config-react-app`
+
+  * [#2325](https://github.com/facebookincubator/create-react-app/pull/2325) Allow declaring variables before use in a scope above. ([@gaearon](https://github.com/gaearon))
+
+#### :house: Internal
+* `react-dev-utils`, `react-scripts`
+
+  * [#2320](https://github.com/facebookincubator/create-react-app/pull/2320) Remove unnecessary dependencies. ([@pmadar](https://github.com/pmadar))
+
+#### Committers: 2
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Pavol Madar ([pmadar](https://github.com/pmadar))
+
+### Migrating from 1.0.4 to 1.0.5
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.5
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.5
+```
+
+## 1.0.4 (May 22, 2017)
+
+#### :bug: Bug Fix
+
+* `react-error-overlay`
+  * Fix a regression in published package.
+
+### Migrating from 1.0.3 to 1.0.4
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.4
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.4
+```
+
+## 1.0.3 (May 21, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`
+  * [#2297](https://github.com/facebookincubator/create-react-app/pull/2297) Don’t serve the development version from public IPs by default. ([@Timer](https://github.com/Timer))
+
+* `eslint-config-react-app`
+  * [#2311](https://github.com/facebookincubator/create-react-app/pull/2311) Disable `flowtype/require-valid-file-annotation` lint rule due to false positives. ([@Robdel12](https://github.com/Robdel12))
+
+* `react-dev-utils`, `react-error-overlay`
+  * [#2301](https://github.com/facebookincubator/create-react-app/pull/2301) Wrap more `console` calls into a check. ([@BrodaNoel](https://github.com/BrodaNoel))
+
+* `react-scripts`
+  * [#2314](https://github.com/facebookincubator/create-react-app/pull/2314) Fix a "File not found" false positive. ([@gaearon](https://github.com/gaearon))
+
+#### Committers: 4
+- Broda Noel ([BrodaNoel](https://github.com/BrodaNoel))
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Joe Haddad ([Timer](https://github.com/Timer))
+- Robert DeLuca ([Robdel12](https://github.com/Robdel12))
+
+### Migrating from 1.0.2 to 1.0.3
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.3
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.3
+```
+
+## 1.0.2 (May 20, 2017)
+
+#### :bug: Bug Fix
+
+* `react-dev-utils`, `react-scripts`
+
+  * [#2276](https://github.com/facebookincubator/create-react-app/pull/2276) Serve a no-op service worker in development to ensure it doesn't cache the production build even if it was served on the same port. ([@jeffposnick](https://github.com/jeffposnick))
+
+* `react-dev-utils`, `react-error-overlay`
+
+  * [#2290](https://github.com/facebookincubator/create-react-app/pull/2290) Wrap console calls into a check for IE9. ([@gaearon](https://github.com/gaearon))
+
+* `react-dev-utils`
+
+  * [#2282](https://github.com/facebookincubator/create-react-app/pull/2282) Add Windows Subsystem for Linux support to the error overlay. ([@noinkling](https://github.com/noinkling))
+  * [#2269](https://github.com/facebookincubator/create-react-app/pull/2269) Fix a missing package dependency. ([@GreenGremlin](https://github.com/GreenGremlin))
+
+#### :nail_care: Enhancement
+
+* `react-scripts`
+
+  * [#2221](https://github.com/facebookincubator/create-react-app/pull/2221) Ejecting should ensure you have clean `git status`. ([@milocosmopolitan](https://github.com/milocosmopolitan))
+  * [#2288](https://github.com/facebookincubator/create-react-app/pull/2288) Only enable host check if you use proxy, and add a way to opt out of it. ([@gaearon](https://github.com/gaearon))
+
+#### :house: Internal
+
+* `react-dev-utils`, `react-scripts`
+
+  * [#2283](https://github.com/facebookincubator/create-react-app/pull/2283) Remove unnecessary dependencies(#751). ([@pmadar](https://github.com/pmadar))
+
+#### Committers: 6
+- Dan Abramov ([gaearon](https://github.com/gaearon))
+- Jeffrey Posnick ([jeffposnick](https://github.com/jeffposnick))
+- Jonathan ([GreenGremlin](https://github.com/GreenGremlin))
+- Malcolm ([noinkling](https://github.com/noinkling))
+- Milo Kang ([milocosmopolitan](https://github.com/milocosmopolitan))
+- [pmadar](https://github.com/pmadar)
+
+### Migrating from 1.0.1 to 1.0.2
+
+Inside any created project that has not been ejected, run:
+
+```
+npm install --save-dev --save-exact react-scripts@1.0.2
+```
+
+or
+
+```
+yarn add --dev --exact react-scripts@1.0.2
+```
+
+If you previously had issues with an `Invalid Host Header` error, [follow these new instructions](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#invalid-host-header-errors-after-configuring-proxy) to fix it.
+
 ## 1.0.1 (May 19, 2017)
 
 #### :bug: Bug Fix
@@ -191,6 +434,10 @@ Follow these steps if you see errors about missing lint rules in the editor.
 4. Start the editor again
 
 If you still have the problem please file an issue.
+
+#### Some of my tests started crashing because of unhandled rejections
+
+Unhandled Promise rejections will now crash tests. You can fix them by explicitly catching the errors you don’t care about.
 
 #### How to turn my app into a [Progressive Web App](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)?
 
