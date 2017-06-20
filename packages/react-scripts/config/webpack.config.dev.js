@@ -35,7 +35,7 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
-module.exports = {
+const configuration = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -68,12 +68,7 @@ module.exports = {
       // changing JS code would still trigger a refresh.
     ],
     'vendor-react': ['react', 'react-dom', 'react-router'],
-    'vendor-redux': [
-      'redux',
-      'react-redux',
-      'redux-thunk',
-      'react-router-redux',
-    ],
+    'vendor-redux': ['redux', 'react-redux', 'redux-thunk', 'react-router-redux'],
   },
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:
@@ -332,3 +327,7 @@ module.exports = {
     hints: false,
   },
 };
+
+configuration.entry = Object.assign({}, configuration.entry, paths.appEntry);
+
+module.exports = configuration;

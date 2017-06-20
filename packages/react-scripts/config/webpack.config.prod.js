@@ -57,7 +57,7 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = {
+const configuration = {
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -67,12 +67,7 @@ module.exports = {
   entry: {
     app: [require.resolve('./polyfills'), paths.appIndexJs],
     'vendor-react': ['react', 'react-dom', 'react-router'],
-    'vendor-redux': [
-      'redux',
-      'react-redux',
-      'redux-thunk',
-      'react-router-redux',
-    ],
+    'vendor-redux': ['redux', 'react-redux', 'redux-thunk', 'react-router-redux'],
   },
   output: {
     // The build folder.
@@ -406,3 +401,7 @@ module.exports = {
     tls: 'empty',
   },
 };
+
+configuration.entry = Object.assign({}, configuration.entry, paths.appEntry);
+
+module.exports = configuration;

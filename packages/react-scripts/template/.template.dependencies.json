@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "axios": "^0.16.1",
+    "moment": "^2.16.0",
     "prop-types": "^15.5.10",
     "react-hot-loader": "next",
     "react-redux": "^4.4.5",
