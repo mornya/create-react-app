@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+html, body {
+  height: 100%;
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+label[title] {
+  cursor: help;
+}
+
+button[onClick] {
+  cursor: pointer;
+}
+
+/* Common blind text class */
+.blind {
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border: 0;
+  background: none;
+  font-size: 0;
+  line-height: 0;
+}

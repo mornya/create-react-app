@@ -67,8 +67,18 @@ const configuration = {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ],
-    'vendor-react': ['react', 'react-dom', 'react-router'],
-    'vendor-redux': ['redux', 'react-redux', 'redux-thunk', 'react-router-redux'],
+    'vendor-react': [
+      'react',
+      'react-dom',
+      'react-router',
+      'react-tap-event-plugin',
+    ],
+    'vendor-redux': [
+      'redux',
+      'react-redux',
+      'redux-thunk',
+      'react-router-redux',
+    ],
   },
   output: {
     // Next line is not used in dev but WebpackDevServer crashes without it:

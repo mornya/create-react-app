@@ -5,17 +5,19 @@ import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import reduxThunk from 'redux-thunk';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import routes from './routes';
 import 'normalize.css';
-// import 'reset.scss';
+// import './reset.scss';
+import './index.scss';
 
 document.querySelector('html').setAttribute('ua', navigator.userAgent);
 
 const configureStore = initialState => {
-  const middlewares = [thunk];
+  const middlewares = [reduxThunk];
   // Redux devtool 크롬 익스텐션을 사용할 때, applyMiddleware를 createStore의 인자로 넘기면
   // 정상적으로 작동되지 않아 아래와 같이 감싸는 형태로 변경.
   const store = applyMiddleware(...middlewares)(createStore)(
@@ -49,6 +51,7 @@ const renderAppContainer = () => {
 };
 
 registerServiceWorker();
+injectTapEventPlugin(); // onTouchTap 이벤트의 polyfill
 renderAppContainer();
 
 if (module.hot) {
