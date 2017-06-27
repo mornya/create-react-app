@@ -412,6 +412,15 @@ const configuration = {
   },
 };
 
+// 커스텀 엔트리 추가
 configuration.entry = Object.assign({}, configuration.entry, paths.appEntry);
+
+// CommonsChunkPlugin 추가
+configuration.plugins.push(
+  new webpack.optimize.CommonsChunkPlugin({
+    names: Object.keys(configuration.entry),
+    minChunks: Infinity,
+  })
+);
 
 module.exports = configuration;

@@ -57,23 +57,21 @@ const configuration = {
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
       require.resolve('react-dev-utils/webpackHotDevClient'),
-      // We ship a few polyfills by default:
-      require.resolve('./polyfills'),
-      // Errors should be considered fatal in development
-      require.resolve('react-error-overlay'),
       // Finally, this is your app's code:
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ],
-    'vendor-react': [
+    vendor: [
+      // We ship a few polyfills by default:
+      require.resolve('./polyfills'),
+      // Errors should be considered fatal in development
+      require.resolve('react-error-overlay'),
       'react',
       'react-dom',
       'react-router',
       'react-tap-event-plugin',
-    ],
-    'vendor-redux': [
       'redux',
       'react-redux',
       'redux-thunk',
