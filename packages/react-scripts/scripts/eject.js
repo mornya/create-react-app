@@ -144,24 +144,34 @@ inquirer
 
     console.log(cyan('Updating the dependencies'));
     const ownPackageName = ownPackage.name;
-    if (appPackage.devDependencies[ownPackageName]) {
-      console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
-      delete appPackage.devDependencies[ownPackageName];
+    if (appPackage.devDependencies) {
+      // We used to put react-scripts in devDependencies
+      if (appPackage.devDependencies[ownPackageName]) {
+        console.log(`  Removing ${cyan(ownPackageName)} from devDependencies`);
+        delete appPackage.devDependencies[ownPackageName];
+      }
     }
+    appPackage.dependencies = appPackage.dependencies || {};
     if (appPackage.dependencies[ownPackageName]) {
       console.log(`  Removing ${cyan(ownPackageName)} from dependencies`);
       delete appPackage.dependencies[ownPackageName];
     }
-
     Object.keys(ownPackage.dependencies).forEach(key => {
       // For some reason optionalDependencies end up in dependencies after install
       if (ownPackage.optionalDependencies[key]) {
         return;
       }
-      console.log(`  Adding ${cyan(key)} to devDependencies`);
-      appPackage.devDependencies[key] = ownPackage.dependencies[key];
+      console.log(`  Adding ${cyan(key)} to dependencies`);
+      appPackage.dependencies[key] = ownPackage.dependencies[key];
+    });
+    // Sort the deps
+    const unsortedDependencies = appPackage.dependencies;
+    appPackage.dependencies = {};
+    Object.keys(unsortedDependencies).sort().forEach(key => {
+      appPackage.dependencies[key] = unsortedDependencies[key];
     });
     console.log();
+
     console.log(cyan('Updating the scripts'));
     delete appPackage.scripts['eject'];
     Object.keys(appPackage.scripts).forEach(key => {
@@ -220,11 +230,26 @@ inquirer
     }
 
     if (fs.existsSync(paths.yarnLockFile)) {
-      console.log(cyan('Running yarn...'));
-      spawnSync('yarnpkg', [], { stdio: 'inherit' });
+      // TODO: this is disabled for three reasons.
+      //
+      // 1. It produces garbage warnings on Windows on some systems:
+      //    https://github.com/facebookincubator/create-react-app/issues/2030
+      //
+      // 2. For the above reason, it breaks Windows CI:
+      //    https://github.com/facebookincubator/create-react-app/issues/2624
+      //
+      // 3. It is wrong anyway: re-running yarn will respect the lockfile
+      //    rather than package.json we just updated. Instead we should have
+      //    updated the lockfile. So we might as well not do it while it's broken.
+      //    https://github.com/facebookincubator/create-react-app/issues/2627
+      //
+      // console.log(cyan('Running yarn...'));
+      // spawnSync('yarnpkg', [], { stdio: 'inherit' });
     } else {
       console.log(cyan('Running npm install...'));
-      spawnSync('npm', ['install'], { stdio: 'inherit' });
+      spawnSync('npm', ['install', '--loglevel', 'error'], {
+        stdio: 'inherit',
+      });
     }
     console.log(green('Ejected successfully!'));
     console.log();
