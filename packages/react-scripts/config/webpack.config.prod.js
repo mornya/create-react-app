@@ -43,7 +43,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+const cssFilename = `${paths.staticPath}/css/[name].css`; // [name]-[contenthash:8].css
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -85,8 +85,8 @@ const configuration = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js',
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    filename: `${paths.staticPath}/js/[name].bundle.js`, // [name]-[chunkhash:8].js
+    chunkFilename: `${paths.staticPath}/js/[name]-[chunkhash:8].js`, // [name]-[chunkhash:8].chunk.js
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -178,11 +178,11 @@ const configuration = {
           // "url" loader works just like "file" loader but it also embeds
           // assets smaller than specified size as data URLs to avoid requests.
           {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.svg$/],
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: `${paths.staticPath}/images/[name].[ext]`, // [name]-[hash:8].[ext]
             },
           },
           // Added by mornya, fonts "url" loader.
@@ -191,7 +191,7 @@ const configuration = {
             loader: 'url-loader',
             options: {
               limit: 30000,
-              name: 'static/fonts/[name]-[hash:8].[ext]',
+              name: `${paths.staticPath}/fonts/[name]-[hash:8].[ext]`,
             },
           },
           // Process JS with Babel.
@@ -276,7 +276,7 @@ const configuration = {
             // by webpacks internal loaders.
             exclude: [/\.js$/, /\.html$/, /\.json$/],
             options: {
-              name: 'static/media/[name].[hash:8].[ext]',
+              name: `${paths.staticPath}/medias/[name]-[hash:8].[ext]`,
             },
           },
           // ** STOP ** Are you adding a new loader?
@@ -393,11 +393,12 @@ const configuration = {
 configuration.entry = Object.assign({}, configuration.entry, paths.appEntry);
 
 // CommonsChunkPlugin 추가
+const names = Object.keys(configuration.entry)
+  .filter(name => name !== 'app')
+  .reverse();
+names.push('app');
 configuration.plugins.push(
-  new webpack.optimize.CommonsChunkPlugin({
-    names: Object.keys(configuration.entry),
-    minChunks: Infinity,
-  })
+  new webpack.optimize.CommonsChunkPlugin({ names, minChunks: Infinity })
 );
 
 module.exports = configuration;

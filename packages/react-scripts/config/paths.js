@@ -18,8 +18,19 @@ const url = require('url');
 // https://github.com/facebookincubator/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
-
+const appPackageJson = require(resolveApp('package.json')); // Added by mornya
 const envPublicUrl = process.env.PUBLIC_URL;
+
+const prefixSlash = (path, needsSlash) => {
+  const hasSlash = path.startsWith('/');
+  if (hasSlash && !needsSlash) {
+    return path.substring(1, path.length);
+  } else if (!hasSlash && needsSlash) {
+    return `/${path}`;
+  } else {
+    return path;
+  }
+};
 
 function ensureSlash(path, needsSlash) {
   const hasSlash = path.endsWith('/');
@@ -31,8 +42,6 @@ function ensureSlash(path, needsSlash) {
     return path;
   }
 }
-
-const getAppEntry = appPackageJson => require(appPackageJson).appEntry;
 
 const getPublicUrl = appPackageJson =>
   envPublicUrl || require(appPackageJson).homepage;
@@ -64,11 +73,18 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  appEntry: getAppEntry(resolveApp('package.json')),
+  appEntry: appPackageJson.appEntry,
+  openPath: appPackageJson.openPath
+    ? prefixSlash(ensureSlash(appPackageJson.openPath, false), false)
+    : '',
+  staticPath: appPackageJson.staticPath
+    ? prefixSlash(ensureSlash(appPackageJson.staticPath, false), false)
+    : 'static',
 };
 
 // @remove-on-eject-begin
 const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
+const ownPackageJson = require(resolveOwn('package.json'));
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
@@ -85,14 +101,21 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
-  appEntry: getAppEntry(resolveApp('package.json')),
+  appEntry: appPackageJson.appEntry,
+  openPath: appPackageJson.openPath
+    ? prefixSlash(ensureSlash(appPackageJson.openPath, false), false)
+    : '',
+  staticPath: appPackageJson.staticPath
+    ? prefixSlash(ensureSlash(appPackageJson.staticPath, false), false)
+    : 'static',
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 };
 
-const ownPackageJson = require('../package.json');
-const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
+const reactScriptsPath = resolveApp(
+  `node_modules/${require('../package.json').name}`
+);
 const reactScriptsLinked =
   fs.existsSync(reactScriptsPath) &&
   fs.lstatSync(reactScriptsPath).isSymbolicLink();
@@ -116,7 +139,13 @@ if (
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
-    appEntry: getAppEntry(resolveApp('package.json')),
+    appEntry: ownPackageJson.appEntry,
+    openPath: ownPackageJson.openPath
+      ? prefixSlash(ensureSlash(ownPackageJson.openPath, false), false)
+      : '',
+    staticPath: ownPackageJson.staticPath
+      ? prefixSlash(ensureSlash(ownPackageJson.staticPath, false), false)
+      : 'static',
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
