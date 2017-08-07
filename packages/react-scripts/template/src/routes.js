@@ -1,16 +1,24 @@
 import React from 'react';
-import { Route } from 'react-router';
-// import { Route, IndexRoute } from 'react-router';
+import { Router, Route } from 'react-router';
+// import { Router, Route, IndexRoute } from 'react-router';
 
 import App from 'containers/App';
 
 /*
  * For example,
  *
- * <Route path="/" component={App}>
+ * <Router history={history}>
+ *   <Route path="/" component={App}>
  *     <IndexRoute component={HomePage}/>
  *     <Route path="home" component={HomePage}/>
  *     <Route path="about" component={AboutPage}/>
- * </Route>
+ *   </Route>
+ * </Router>
  */
-export default <Route path="/" component={App} />;
+export default ({ history }) => {
+  return (
+    <Router history={history}>
+      <Route path="/" component={App} />
+    </Router>
+  );
+};
