@@ -248,6 +248,9 @@ const configuration = {
               },
               {
                 loader: require.resolve('sass-loader'),
+                options: {
+                  includePaths: ['src'],
+                },
               },
             ],
           },
