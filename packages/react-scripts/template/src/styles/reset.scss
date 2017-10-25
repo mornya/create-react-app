@@ -7,7 +7,6 @@
  * Refs from http://meyerweb.com/eric/tools/css/reset/ (v2.0 | 20110126)
  *
  * Copyright by mornya. All rights reserved. Since 2006.
- * This application is based by SAPP Solution.
  */
 $color-text: #333;
 $color-text-placeholder: #a0a0a0;
@@ -207,19 +206,4 @@ a:hover, a:active {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-}
-
-/* Common blind text class */
-.blind {
-	display: block;
-	overflow: hidden;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 0;
-	height: 0;
-	border: 0;
-	background: none;
-	font-size: 0;
-	line-height: 0;
 }

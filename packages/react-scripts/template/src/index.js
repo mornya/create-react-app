@@ -9,10 +9,10 @@ import reduxThunk from 'redux-thunk';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
-import routes from './routes';
+import Routes from './Routes';
 import 'normalize.css';
-// import './reset.scss';
-import './index.scss';
+// import 'styles/reset.scss';
+import 'styles/main.scss';
 
 document.querySelector('html').setAttribute('ua', navigator.userAgent);
 
@@ -38,12 +38,12 @@ const configureStore = initialState => {
 };
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
-const renderAppContainer = Routes => {
+const renderAppContainer = EntryApp => {
   // store를 props로 넘겨받는 이유 (https://github.com/reactjs/react-redux/issues/259)
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <Routes history={history} />
+        <EntryApp history={history} />
       </Provider>
     </AppContainer>,
     document.getElementById('root')
@@ -52,12 +52,12 @@ const renderAppContainer = Routes => {
 
 registerServiceWorker();
 injectTapEventPlugin(); // onTouchTap 이벤트의 polyfill
-renderAppContainer(routes);
+renderAppContainer(Routes);
 
 if (module.hot) {
   // HMR AppContainer
-  module.hot.accept('./routes', () => {
-    const nextRoutes = require('./routes').default; // 수정 금지
+  module.hot.accept('./Routes', () => {
+    const nextRoutes = require('./Routes').default; // 수정 금지
     renderAppContainer(nextRoutes);
   });
 }

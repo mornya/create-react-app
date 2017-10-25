@@ -66,6 +66,7 @@ const configuration = {
       // changing JS code would still trigger a refresh.
     ],
     'vendor-react': [
+      'prop-types',
       'react',
       'react-dom',
       'react-router',
