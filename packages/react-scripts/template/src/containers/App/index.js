@@ -6,14 +6,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
+        <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to mornya UI boilerplate</h2>
-        </div>
+          <h1 className="App-title">Welcome to mornya UI boilerplate</h1>
+        </header>
         <p className="App-intro">
           To get started, edit
           {' '}
-          <code>src/containers/App/index.js</code>
+          <code>src/containers/App/index.jsx</code>
           {' '}
           and save to reload.
         </p>
