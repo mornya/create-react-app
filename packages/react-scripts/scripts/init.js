@@ -41,8 +41,8 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
-    flow: 'node_modules/flow-bin/vendor/flow',
-    'flow:stop': 'node_mobules/flow-bin/vendor/flow stop',
+    flow: 'node_modules/.bin/flow',
+    'flow:stop': 'node_modules/.bin/flow stop',
   };
 
   fs.writeFileSync(
