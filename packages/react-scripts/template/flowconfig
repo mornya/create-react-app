@@ -1,0 +1,25 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/fbjs/.*
+<PROJECT_ROOT>/build/.*
+<PROJECT_ROOT>/public/.*
+
+[include]
+<PROJECT_ROOT>/src/**/*.js
+<PROJECT_ROOT>/src/**/*.jsx
+
+[libs]
+
+[lints]
+
+[options]
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+esproposal.decorators=ignore
+module.name_mapper='^\(.*\)' -> '<PROJECT_ROOT>/node_modules/\1'
+module.name_mapper='^@\/\(.*\)' -> '<PROJECT_ROOT>/src/\1'
+module.name_mapper='^@\(.*\)' -> '<PROJECT_ROOT>/src/\1'
+module.name_mapper='^\(components\|constants\|containers\|stlyes\|utils\)' -> '<PROJECT_ROOT>/src/\1'
+module.name_mapper='^containers' -> '<PROJECT_ROOT>/src/containers'
+module.name_mapper='.*\.\(svg\|png\|jpg\|gif\)$' -> '<PROJECT_ROOT>/flow/stub-assets.js'
+module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/flow/stub-styles.js'
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow/stub-styles.js'

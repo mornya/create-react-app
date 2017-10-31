@@ -117,6 +117,7 @@ const configuration = {
     // for React Native Web.
     extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
+      '@': paths.appSrc /* added by mornya */,
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
       // It usually still works on npm 3 without this but it would be
@@ -202,7 +203,10 @@ const configuration = {
             options: {
               // @remove-on-eject-begin
               babelrc: false,
-              presets: [require.resolve('babel-preset-react-app')],
+              presets: [
+                require.resolve('babel-preset-flow'),
+                require.resolve('babel-preset-react-app'),
+              ],
               // @remove-on-eject-end
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/

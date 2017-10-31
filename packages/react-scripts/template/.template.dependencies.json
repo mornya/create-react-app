@@ -2,14 +2,15 @@
   "dependencies": {
     "axios": "^0.16.1",
     "axios-cancel": "^0.2.2",
+    "flow-bin": "^0.57.3",
     "moment": "^2.16.0",
-    "prop-types": "^15.5.10",
+    "prop-types": "latest",
     "react-addons-shallow-compare": "^15.6.0",
     "react-hot-loader": "next",
     "react-redux": "^5.0.5",
     "react-router": "^3.0.5",
     "react-router-redux": "^4.0.8",
-    "react-tap-event-plugin": "^2.0.1",
+    "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
   }

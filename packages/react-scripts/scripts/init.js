@@ -41,6 +41,8 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
+    flow: 'node_modules/flow-bin/vendor/flow',
+    'flow:stop': 'node_mobules/flow-bin/vendor/flow stop',
   };
 
   fs.writeFileSync(
@@ -89,6 +91,25 @@ module.exports = function(
     }
   );
 
+  // Rename flowconfig after the fact to prevent npm from renaming it to .flowconfig
+  fs.move(
+    path.join(appPath, 'flowconfig'),
+    path.join(appPath, '.flowconfig'),
+    [],
+    err => {
+      if (err) {
+        // Append if there's already a `.flowconfig` file there
+        if (err.code === 'EEXIST') {
+          const data = fs.readFileSync(path.join(appPath, 'flowconfig'));
+          fs.appendFileSync(path.join(appPath, '.flowconfig'), data);
+          fs.unlinkSync(path.join(appPath, 'flowconfig'));
+        } else {
+          throw err;
+        }
+      }
+    }
+  );
+
   let command;
   let args;
 
@@ -99,7 +120,7 @@ module.exports = function(
     command = 'npm';
     args = ['install', '--save', verbose && '--verbose'].filter(e => e);
   }
-  args.push('react', 'react-dom');
+  args.push('react', 'react-dom', 'prop-types');
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -120,7 +141,7 @@ module.exports = function(
   // which doesn't install react and react-dom along with react-scripts
   // or template is presetend (via --internal-testing-template)
   // if (!isReactInstalled(appPackage) || template) {
-  console.log(`Installing react and react-dom using ${command}...`);
+  console.log(`Installing react, react-dom using ${command}...`);
   console.log();
 
   const proc = spawn.sync(command, args, { stdio: 'inherit' });

@@ -1,4 +1,4 @@
 {
-  "presets": ["react-app"],
+  "presets": ["flow"],
   "plugins": ["react-html-attrs", "transform-class-properties", "react-hot-loader/babel"]
 }
