@@ -1,7 +1,7 @@
 {
   "name": "mornya-react-scripts",
-  "version": "1.4.0",
-  "description": "Configuration and scripts for Create React App.",
+  "version": "1.4.1",
+  "description": "Customized configurations and scripts for Create React App.",
   "repository": "mornya/create-react-app",
   "license": "MIT",
   "engines": {
@@ -59,12 +59,12 @@
     "react-dev-utils": "latest",
     "react-error-overlay": "^2.0.2",
     "react-hot-loader": "next",
-    "react-redux": "^4.4.8",
+    "react-redux": "^5.0.6",
     "react-router": "^3.2.0",
     "react-router-redux": "^4.0.8",
     "react-tap-event-plugin": "^3.0.2",
     "redbox-react": "^1.5.0",
-    "redux": "^3.7.0",
+    "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "0.19.0",
@@ -82,5 +82,11 @@
   },
   "optionalDependencies": {
     "fsevents": "1.1.2"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "prop-types": "^15.6.0",
+    "react-router": "^3.2.0"
   }
 }
