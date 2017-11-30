@@ -41,7 +41,8 @@ module.exports = function(
     build: 'react-scripts build',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
-    flow: 'node_modules/.bin/flow',
+    flow: 'node_modules/.bin/flow check',
+    'flow:start': 'node_modules/.bin/flow',
     'flow:stop': 'node_modules/.bin/flow stop',
   };
 

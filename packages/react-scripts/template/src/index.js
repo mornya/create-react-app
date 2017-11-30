@@ -14,19 +14,8 @@ import 'normalize.css';
 // import 'styles/reset.scss';
 import 'styles/main.scss';
 
-document.querySelector('html').setAttribute('ua', navigator.userAgent);
-
 const configureStore = initialState => {
   const middlewares = [reduxThunk];
-
-  // HMR Store
-  // 주의: HMR은 적용하지 않는다 (Redux store 변경 필요시 수동 refresh 필요함)
-  //if (module.hot) {
-  //  module.hot.accept(() => {
-  //    const nextRootReducer = require('./reducers').default;
-  //    store.replaceReducer(nextRootReducer);
-  //  });
-  //}
 
   // Redux devtool 크롬 익스텐션을 사용할 때, applyMiddleware를 createStore의 인자로 넘기면
   // 정상적으로 작동되지 않아 아래와 같이 감싸는 형태로 변경.
@@ -49,6 +38,9 @@ const renderAppContainer = EntryApp => {
     document.getElementById('root')
   );
 };
+
+// ========== 초기화 ==========
+document.querySelector('html').setAttribute('ua', navigator.userAgent);
 
 registerServiceWorker();
 injectTapEventPlugin(); // onTouchTap 이벤트의 polyfill

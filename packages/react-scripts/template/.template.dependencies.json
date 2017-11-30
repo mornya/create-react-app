@@ -2,7 +2,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "axios-cancel": "^0.2.2",
-    "flow-bin": "^0.57.3",
+    "flow-bin": "^0.58.0",
     "moment": "^2.19.1",
     "prop-types": "latest",
     "react-addons-shallow-compare": "^15.6.2",

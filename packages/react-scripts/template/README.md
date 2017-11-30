@@ -36,11 +36,15 @@ npm run clean
 ```bash
 npm run lint
 ```
-##### Run Flow
+##### Flow Type Check
 ```bash
 npm run flow
 ```
-##### Stop Flow
+##### Start Flow Type server
+```bash
+npm run flow:start
+```
+##### Stop Flow Type server
 ```bash
 npm run flow:stop
 ```
