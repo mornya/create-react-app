@@ -65,18 +65,16 @@ const configuration = {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ],
-    'vendor-react': [
+    'vendor-boilerplate': [
       'prop-types',
       'react',
       'react-dom',
-      'react-router',
-      'react-tap-event-plugin',
-    ],
-    'vendor-redux': [
-      'redux',
       'react-redux',
-      'redux-thunk',
+      'react-router-dom',
       'react-router-redux',
+      'react-tap-event-plugin',
+      'redux',
+      'redux-thunk',
     ],
   },
   output: {

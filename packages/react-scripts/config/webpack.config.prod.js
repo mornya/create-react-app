@@ -66,17 +66,15 @@ const configuration = {
   // In production, we only want to load the polyfills and the app code.
   entry: {
     app: [require.resolve('./polyfills'), paths.appIndexJs],
-    'vendor-react': [
+    'vendor-boilerplate': [
       'react',
       'react-dom',
-      'react-router',
-      'react-tap-event-plugin',
-    ],
-    'vendor-redux': [
-      'redux',
       'react-redux',
-      'redux-thunk',
+      'react-router-dom',
       'react-router-redux',
+      'react-tap-event-plugin',
+      'redux',
+      'redux-thunk',
     ],
   },
   output: {

@@ -20,7 +20,7 @@ class About extends Component {
 
 About.propTypes = {
   pageView: PropTypes.number,
-  addAboutPageView: PropTypes.func.isRequired,
+  addPageView: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
