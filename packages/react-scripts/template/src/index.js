@@ -4,6 +4,11 @@ import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
+
+// To "Code Splitting", be importing React-Router modules by like this.
+import BrowserRouter from 'react-router-dom/es/BrowserRouter';
+import HashRouter from 'react-router-dom/es/HashRouter';
+
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
@@ -23,11 +28,14 @@ const configureStore = initialState => {
   );
 };
 const store = configureStore();
+const Router = window.history.pushState ? BrowserRouter : HashRouter;
 const renderAppContainer = EntryApp => {
   ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
-        <EntryApp />
+        <Router>
+          <EntryApp />
+        </Router>
       </Provider>
     </AppContainer>,
     document.getElementById('root')
@@ -39,7 +47,7 @@ const elHTML = document.querySelector('html');
 elHTML.setAttribute('ua', navigator.userAgent); // UA string 등록
 elHTML.setAttribute('lang', navigator.language); // lang string 등록
 
-registerServiceWorker();
+registerServiceWorker(); // Service-worker 등록
 injectTapEventPlugin(); // onTouchTap 이벤트의 polyfill
 
 // Initialize App

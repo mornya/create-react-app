@@ -71,7 +71,6 @@ const configuration = {
       'react-dom',
       'react-redux',
       'react-router-dom',
-      'react-router-redux',
       'react-tap-event-plugin',
       'redux',
       'redux-thunk',

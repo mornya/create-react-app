@@ -1,6 +1,6 @@
 {
   "name": "mornya-react-scripts",
-  "version": "2.0.0-rc2",
+  "version": "2.0.0-rc3",
   "description": "Customized configurations and scripts for Create React App.",
   "repository": "mornya/create-react-app",
   "license": "MIT",
@@ -77,7 +77,6 @@
     "react-hot-loader": "latest",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
-    "react-router-redux": "^4.0.8",
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
