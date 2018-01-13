@@ -37,6 +37,10 @@ function printHostingInstructions(
     printStaticServerInstructions(buildFolder, useYarn);
   }
   console.log();
+  console.log('Find out more about deployment here:');
+  console.log();
+  console.log(`  ${chalk.yellow('http://bit.ly/2vY88Kr')}`);
+  console.log();
 }
 
 function printBaseMessage(buildFolder, hostingLocation) {
@@ -62,7 +66,6 @@ function printBaseMessage(buildFolder, hostingLocation) {
     );
   }
   console.log();
-
   console.log(`The ${chalk.cyan(buildFolder)} folder is ready to be deployed.`);
 }
 
