@@ -43,7 +43,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = `${paths.staticPath}/css/[name].css`; // [name]-[contenthash:8].css
+const cssFilename = `${paths.staticPath}/css/[name].[contenthash:8].css`;
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -82,8 +82,8 @@ const configuration = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: `${paths.staticPath}/js/[name].bundle.js`, // [name]-[chunkhash:8].js
-    chunkFilename: `${paths.staticPath}/js/[name]-[chunkhash:8].js`, // [name]-[chunkhash:8].chunk.js
+    filename: `${paths.staticPath}/js/[name].[chunkhash:8].js`,
+    chunkFilename: `${paths.staticPath}/js/[name]-[chunkhash:8].js`,
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -180,7 +180,7 @@ const configuration = {
             loader: require.resolve('url-loader'),
             options: {
               limit: 10000,
-              name: `${paths.staticPath}/images/[name].[ext]`, // [name]-[hash:8].[ext]
+              name: `${paths.staticPath}/images/[name]-[hash:8].[ext]`,
             },
           },
           // Added by mornya, fonts "url" loader.
@@ -353,7 +353,6 @@ const configuration = {
     // having to parse `index.html`.
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
-      publicPath: publicPath,
     }),
     // Generate a service worker script that will precache, and keep up to date,
     // the HTML & assets that are part of the Webpack build.
