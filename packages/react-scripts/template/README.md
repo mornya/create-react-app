@@ -28,6 +28,11 @@ npm run build
 ```bash
 npm run build --report
 ```
+##### Build bundle only for publishing production with minification
+```bash
+npm run bundle
+npm publish build
+```
 ##### Clear production build directory
 ```bash
 npm run clean

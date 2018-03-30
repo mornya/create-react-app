@@ -39,12 +39,17 @@ module.exports = function(
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
+    bundle: 'react-scripts bundle',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
     flow: 'node_modules/.bin/flow check',
     'flow:start': 'node_modules/.bin/flow',
     'flow:stop': 'node_modules/.bin/flow stop',
   };
+
+  // Setup values to make bundle (added by mornya)
+  appPackage.private = true; // not publish original bundle project if bundling
+  appPackage.license = 'MIT';
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),
