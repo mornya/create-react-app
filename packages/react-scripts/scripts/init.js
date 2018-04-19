@@ -40,6 +40,9 @@ module.exports = function(
     start: 'react-scripts start',
     build: 'react-scripts build',
     bundle: 'react-scripts bundle',
+    transpile: 'react-scripts transpile src out',
+    lint:
+      'eslint src --cache --ignore-pattern .gitignore --ext js,jsx,mjs --max-warnings 100',
     test: 'react-scripts test --env=jsdom',
     eject: 'react-scripts eject',
     flow: 'node_modules/.bin/flow check',
@@ -79,42 +82,33 @@ module.exports = function(
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
-  fs.move(
-    path.join(appPath, 'gitignore'),
-    path.join(appPath, '.gitignore'),
-    [],
-    err => {
-      if (err) {
-        // Append if there's already a `.gitignore` file there
-        if (err.code === 'EEXIST') {
-          const data = fs.readFileSync(path.join(appPath, 'gitignore'));
-          fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-          fs.unlinkSync(path.join(appPath, 'gitignore'));
-        } else {
-          throw err;
+  [
+    { from: 'babelrc', to: '.babelrc' },
+    { from: 'editorconfig', to: '.editorconfig' },
+    { from: 'eslintignore', to: '.eslintignore' },
+    { from: 'eslintrc', to: '.eslintrc' },
+    { from: 'flowconfig', to: '.flowconfig' },
+    { from: 'gitignore', to: '.gitignore' },
+    { from: 'scsslint.yml', to: '.scsslint.yml' },
+  ].forEach(item => {
+    fs.move(
+      path.join(appPath, item.from),
+      path.join(appPath, item.to),
+      [],
+      err => {
+        if (err) {
+          // Append if there's already file there
+          if (err.code === 'EEXIST') {
+            const data = fs.readFileSync(path.join(appPath, item.from));
+            fs.appendFileSync(path.join(appPath, item.to), data);
+            fs.unlinkSync(path.join(appPath, item.from));
+          } else {
+            throw err;
+          }
         }
       }
-    }
-  );
-
-  // Rename flowconfig after the fact to prevent npm from renaming it to .flowconfig
-  fs.move(
-    path.join(appPath, 'flowconfig'),
-    path.join(appPath, '.flowconfig'),
-    [],
-    err => {
-      if (err) {
-        // Append if there's already a `.flowconfig` file there
-        if (err.code === 'EEXIST') {
-          const data = fs.readFileSync(path.join(appPath, 'flowconfig'));
-          fs.appendFileSync(path.join(appPath, '.flowconfig'), data);
-          fs.unlinkSync(path.join(appPath, 'flowconfig'));
-        } else {
-          throw err;
-        }
-      }
-    }
-  );
+    );
+  });
 
   let command;
   let args;

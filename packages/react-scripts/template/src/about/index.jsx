@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addPageView } from 'about/action';
+import { addPageView } from './action';
 
 class About extends Component {
   componentWillMount() {

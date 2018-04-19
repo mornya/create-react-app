@@ -15,6 +15,7 @@ const scriptIndex = args.findIndex(
   x =>
     x === 'build' ||
     x === 'bundle' ||
+    x === 'transpile' ||
     x === 'eject' ||
     x === 'start' ||
     x === 'test'
@@ -25,6 +26,7 @@ const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 switch (script) {
   case 'build':
   case 'bundle':
+  case 'transpile':
   case 'eject':
   case 'start':
   case 'test': {

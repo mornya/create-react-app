@@ -1,6 +1,6 @@
 {
   "name": "mornya-react-scripts",
-  "version": "3.0.0-rc5",
+  "version": "3.0.0-rc10",
   "description": "Customized configurations and scripts for Create React App.",
   "repository": "mornya/create-react-app",
   "license": "MIT",
@@ -42,6 +42,7 @@
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-flowtype": "^2.41.0",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.15.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.5.1",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -75,8 +76,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-hot-loader": "latest",
-    "react-redux": "^5.0.6",
-    "react-router-dom": "^4.2.2",
+    "react-redux": "latest",
+    "react-router-dom": "latest",
     "react-tap-event-plugin": "^3.0.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"

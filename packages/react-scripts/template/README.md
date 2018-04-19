@@ -33,6 +33,10 @@ npm run build --report
 npm run bundle
 npm publish build
 ```
+##### Transpile to ES5 sources in src/* to out/*
+```bash
+npm run transpile src out
+```
 ##### Clear production build directory
 ```bash
 npm run clean
