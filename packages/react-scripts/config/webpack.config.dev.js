@@ -113,6 +113,9 @@ const configuration = {
     extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       '@': paths.appSrc /* added by mornya */,
+      'normalize-css': path.dirname(
+        require.resolve('normalize.css')
+      ) /* added by mornya */,
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
       // It usually still works on npm 3 without this but it would be

@@ -13,8 +13,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import App from './App';
-import 'normalize.css';
-// import './reset.scss';
+import 'normalize-css'; // webpack-aliased by unable search module normalize.css
+import './reset.scss'; // customized common local style
 
 const configureStore = initialState => {
   const middlewares = [reduxThunk];
