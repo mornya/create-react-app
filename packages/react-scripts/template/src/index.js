@@ -14,7 +14,7 @@ import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import App from './App';
 import 'normalize-css'; // webpack-aliased by unable search module normalize.css
-import './reset.scss'; // customized common local style
+// import './reset.scss'; // customized common local style
 
 const configureStore = initialState => {
   const middlewares = [reduxThunk];
