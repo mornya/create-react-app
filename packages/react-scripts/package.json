@@ -1,6 +1,6 @@
 {
   "name": "mornya-react-scripts",
-  "version": "3.0.0-rc14",
+  "version": "3.0.0",
   "description": "Customized configuration and scripts for Create React App.",
   "repository": "mornya/create-react-app",
   "license": "MIT",
