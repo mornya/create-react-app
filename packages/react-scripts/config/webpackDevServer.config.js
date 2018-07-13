@@ -111,8 +111,12 @@ module.exports = function(proxy, allowedHost) {
     // Below lines are added by mornya.
     noInfo: false,
     stats: {
+      assets: true,
+      children: false, // Hide console display built modules with childrens
       chunks: false,
       colors: true,
+      modules: false, // Hide console display built modules
+      publicPath: true,
     },
   };
 };

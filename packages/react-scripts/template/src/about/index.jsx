@@ -4,15 +4,19 @@ import { connect } from 'react-redux';
 import { addPageView } from './action';
 
 class About extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.addPageView();
   }
 
   render() {
+    if (!this.props.pageView) {
+      return null;
+    }
+
     return (
       <div className="App-intro">
         <p>This is About page using Redux and Thunk</p>
-        <p>({this.props.pageView} time(s) viewed)</p>
+        <p>({this.props.pageView} time{this.props.pageView > 1 ? 's' : ''} viewed)</p>
       </div>
     );
   }

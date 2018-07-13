@@ -2,37 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import reduxThunk from 'redux-thunk';
-
+import injectTapEventPlugin from 'react-tap-event-plugin';
 // To "Code Splitting", be importing React-Router modules by like this.
 import BrowserRouter from 'react-router-dom/es/BrowserRouter';
 import HashRouter from 'react-router-dom/es/HashRouter';
-
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import registerServiceWorker from './registerServiceWorker';
-import reducers from './reducers';
-import App from './App';
+import Store from './store';
+
+// 스타일 적용 (순서주의)
 import 'normalize-css'; // webpack-aliased by unable search module normalize.css
-// import './reset.scss'; // customized common local style
+// App.jsx에서 App.scss가 로딩되므로 최종적으로 import
+import App from './App';
 
-const configureStore = initialState => {
-  const middlewares = [reduxThunk];
-
-  // Redux devtool 크롬 익스텐션을 사용할 때, applyMiddleware를 createStore의 인자로 넘기면
-  // 정상적으로 작동되지 않아 아래와 같이 감싸는 형태로 변경.
-  return applyMiddleware(...middlewares)(createStore)(
-    reducers,
-    initialState || window.__initialState__,
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  );
-};
-const store = configureStore();
 const Router = window.history.pushState ? BrowserRouter : HashRouter;
 const renderAppContainer = EntryApp => {
   ReactDOM.render(
     <AppContainer>
-      <Provider store={store}>
+      <Provider store={Store}>
         <Router>
           <EntryApp />
         </Router>
