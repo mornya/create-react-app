@@ -1,6 +1,6 @@
 {
   "name": "mornya-react-scripts",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Customized configuration and scripts for Create React App.",
   "repository": "mornya/create-react-app",
   "license": "MIT",
@@ -45,7 +45,7 @@
     "eslint-plugin-jest": "21.17.0",
     "eslint-plugin-jsx-a11y": "6.1.0",
     "eslint-plugin-react": "7.10.0",
-    "extract-text-webpack-plugin": "next",
+    "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.11",
     "fs-extra": "6.0.1",
     "html-webpack-plugin": "3.2.0",
