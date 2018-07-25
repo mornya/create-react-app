@@ -251,6 +251,8 @@ const configuration = {
                 loader: require.resolve('sass-loader'),
                 options: {
                   includePaths: ['src'],
+                  data: `$CORE-static-path: "${process.env.BASENAME ||
+                    ''}/static";`, // added by mornya
                 },
               },
             ],
