@@ -8,6 +8,7 @@
 
 'use strict';
 
+const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
 const args = process.argv.slice(2);
 
@@ -22,6 +23,9 @@ const scriptIndex = args.findIndex(
 );
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
+
+const scriptsVersion = require('../package.json').version;
+console.log(chalk.green('mornya-react-scripts'), `version ${scriptsVersion}\n`);
 
 switch (script) {
   case 'build':

@@ -176,7 +176,7 @@ const configuration = {
             loader: 'url-loader',
             options: {
               limit: 30000,
-              name: `${paths.staticPath}/fonts/[name]-[hash:8].[ext]`,
+              name: `${paths.staticPath}/fonts/[name].[ext]`, // [name]-[hash:8].[ext]
             },
           },
           // Process JS with Babel.
@@ -272,7 +272,7 @@ const configuration = {
             // by webpacks internal loaders.
             exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
             options: {
-              name: `${paths.staticPath}/medias/[name]-[hash:8].[ext]`,
+              name: `${paths.staticPath}/medias/[name].[ext]`, // [name]-[hash:8].[ext]
             },
           },
           // ** STOP ** Are you adding a new loader?
