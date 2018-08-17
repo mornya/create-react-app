@@ -26,11 +26,11 @@ const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const babel = require('babel-core');
+const paths = require('../config/paths');
 const getDirectoryFiles = require('./utils/directoryFiles');
 
 const argv = process.argv.slice(2);
-const sourceDir = argv[0] ? path.resolve(argv[0]) : null;
-const targetDir = argv[1] ? path.resolve(argv[1]) : null;
+const targetDir = argv[0] ? path.resolve(argv[0]) : paths.appBuild;
 const jsExtNames = ['.js', '.jsx', '.mjs'];
 const sourceFiles = [];
 let succeed = 0;
@@ -48,8 +48,14 @@ async function transform(file, src, dest, callback = {}) {
   return fs.outputFile(destpath, code).then(() => callback(file));
 }
 
+function copyPublicFolder() {
+  fs.copySync(paths.appPublic, paths.appBuild, {
+    dereference: true,
+  });
+}
+
 // Get source files in directory
-getDirectoryFiles(sourceDir, (isDir, relPath, currDir, file = '') => {
+getDirectoryFiles(paths.appSrc, (isDir, relPath, currDir, file = '') => {
   if (!isDir) {
     const extName = file.substr(file.lastIndexOf('.'));
     if (jsExtNames.indexOf(extName)) {
@@ -58,17 +64,17 @@ getDirectoryFiles(sourceDir, (isDir, relPath, currDir, file = '') => {
   }
 });
 
-if (!sourceDir || !targetDir) {
-  console.log('Usage: react-scripts transpile <source-dir> <target-dir>');
-  process.exit(1);
-} else {
-  // Start transpiling sources
-  console.log(`Transpiling in ${process.env.BABEL_ENV} mode...`);
-  Promise.all(
-    sourceFiles.map(file =>
-      transform(file, sourceDir, targetDir, () => succeed++)
-    )
-  ).then(() => {
-    console.log(chalk.green(`${succeed} files successfully transpiled.\n`));
-  });
-}
+// Remove all content but keep the directory so that
+// if you're in it, you don't end up in Trash
+fs.emptyDirSync(targetDir);
+// Merge with the public folder
+copyPublicFolder();
+// Start transpiling sources
+console.log(`Transpiling in ${process.env.BABEL_ENV} mode...`);
+Promise.all(
+  sourceFiles.map(file =>
+    transform(file, paths.appSrc, targetDir, () => succeed++)
+  )
+).then(() => {
+  console.log(chalk.green(`${succeed} files successfully transpiled.\n`));
+});

@@ -330,8 +330,19 @@ const configuration = {
   },
 };
 
-// 커스텀 엔트리 추가
-configuration.entry = Object.assign({}, configuration.entry, paths.appEntry);
+// 커스텀 엔트리 추가 (번들링용)
+const appEntries = {};
+if (paths.appEntry) {
+  console.log(Object.keys(paths.appEntry));
+  Object.keys(paths.appEntry).forEach(key => {
+    appEntries[key] = [
+      require.resolve('./polyfills'),
+      `${paths.appSrc}/${paths.appEntry[key]}`,
+    ];
+  });
+}
+
+configuration.entry = Object.assign({}, configuration.entry, appEntries);
 
 // CommonsChunkPlugin 추가 (bundle.js로 인해 entry.app -> entry.index로 변경)
 const entries = Object.keys(configuration.entry);

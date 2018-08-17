@@ -1,22 +1,28 @@
 {
   "presets": [
     [
-      "env", {
+      "env",
+      {
         "modules": false,
         "targets": {
+          "node": "current",
           "browsers": [
             "> 1%",
             "last 2 versions",
             "not ie <= 8"
-          ]
+          ],
+          "useBuiltIns": "usage"
         }
       }
     ],
     "react-app",
-    "flow"
-  ],
-  "plugins": [
-    "react-hot-loader/babel"
+    "flow",
+    [
+      "minify",
+      {
+        "mangle": false
+      }
+    ]
   ],
   "env": {
     "test": {

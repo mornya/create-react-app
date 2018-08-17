@@ -33,9 +33,11 @@ npm run build --report
 npm run bundle
 npm publish build
 ```
-##### Transpile to ES5 sources in src/* to out/*
+##### Transpile to ES5 sources in src/* to output-directory (default <output-directory> is "build" when blank).
 ```bash
-npm run transpile src out
+npm run transpile <output-directory>
+npm run transpile
+npm run transpile dist
 ```
 ##### Clear production build directory
 ```bash
