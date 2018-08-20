@@ -19,6 +19,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const sass = require('./sass');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -251,8 +252,7 @@ const configuration = {
                 loader: require.resolve('sass-loader'),
                 options: {
                   includePaths: ['src'],
-                  data: `$CORE-static-path: "${process.env.BASENAME ||
-                    ''}/static";`, // added by mornya
+                  data: sass.data(paths.staticPath), // added by mornya
                 },
               },
             ],

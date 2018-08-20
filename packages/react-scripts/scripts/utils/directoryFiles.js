@@ -13,7 +13,7 @@ const getDirectoryFiles = (dir, callback) => {
           searchList(name);
         }
       } else {
-        callback(false, relPath);
+        callback(false, relPath, currDir, file);
       }
     }, []);
   };

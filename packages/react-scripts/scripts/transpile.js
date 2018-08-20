@@ -57,8 +57,8 @@ function copyPublicFolder() {
 // Get source files in directory
 getDirectoryFiles(paths.appSrc, (isDir, relPath, currDir, file = '') => {
   if (!isDir) {
-    const extName = file.substr(file.lastIndexOf('.'));
-    if (jsExtNames.indexOf(extName)) {
+    const extName = file.substring(file.lastIndexOf('.'));
+    if (jsExtNames.indexOf(extName) !== -1) {
       sourceFiles.push(relPath);
     }
   }
