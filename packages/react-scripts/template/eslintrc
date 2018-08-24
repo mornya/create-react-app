@@ -2,7 +2,7 @@
   "root": true,
   "extends": [
     "eslint:recommended",
-    "react-app"
+    "./node_modules/mornya-react-scripts/node_modules/eslint-config-react-app/index.js"
   ],
   "env": {
     "browser": true,
