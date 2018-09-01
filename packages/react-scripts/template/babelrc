@@ -17,12 +17,7 @@
     ],
     "react-app",
     "flow",
-    [
-      "minify",
-      {
-        "mangle": false
-      }
-    ]
+    "minify"
   ],
   "env": {
     "test": {
@@ -30,6 +25,12 @@
         "env"
       ],
       "plugins": [
+		[
+		  "module-resolver",
+		  {
+		    "root": [ "./src/**" ]
+		  }
+		],
         "istanbul"
       ]
     }
