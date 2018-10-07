@@ -111,14 +111,21 @@ module.exports = function(
   });
 
   let command;
-  let args;
+  let args, argsDev, argsPeer, argsOpt;
 
   if (useYarn) {
     command = 'yarnpkg';
-    args = ['add'];
+    args = ['add', verbose && '--verbose'].filter(e => e);
+    argsDev = [...args, '-D'];
+    argsPeer = [...args, '-P'];
+    argsOpt = [...args, '-O'];
   } else {
     command = 'npm';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    args = ['install', verbose && '--verbose'].filter(e => e);
+    argsDev = [...args, '--save-dev'];
+    argsPeer = [...args, '--save-prod']; // not supported (npm v6.4.1)
+    argsOpt = [...args, '--save-optional'];
+    args.push('--save');
   }
   args.push('react', 'react-dom', 'prop-types');
 
@@ -128,28 +135,88 @@ module.exports = function(
     '.template.dependencies.json'
   );
   if (fs.existsSync(templateDependenciesPath)) {
-    const templateDependencies = require(templateDependenciesPath).dependencies;
-    args = args.concat(
-      Object.keys(templateDependencies).map(key => {
-        return `${key}@${templateDependencies[key]}`;
-      })
+    const templateDependencies = require(templateDependenciesPath);
+    const prodDependencies = Object.entries(
+      templateDependencies.dependencies || {}
     );
+    const devDependencies = Object.entries(
+      templateDependencies.devDependencies || {}
+    );
+    const peerDependencies = Object.entries(
+      templateDependencies.peerDependencies || {}
+    );
+    const optDependencies = Object.entries(
+      templateDependencies.optionalDependencies || {}
+    );
+
+    prodDependencies.length &&
+      prodDependencies.forEach(([k, v]) => args.push(`${k}@${v}`));
+    devDependencies.length &&
+      devDependencies.forEach(([k, v]) => argsDev.push(`${k}@${v}`));
+    peerDependencies.length &&
+      peerDependencies.forEach(([k, v]) => argsPeer.push(`${k}@${v}`));
+    optDependencies.length &&
+      optDependencies.forEach(([k, v]) => argsOpt.push(`${k}@${v}`));
+
     fs.unlinkSync(templateDependenciesPath);
-  }
 
-  // Install react and react-dom for backward compatibility with old CRA cli
-  // which doesn't install react and react-dom along with react-scripts
-  // or template is presetend (via --internal-testing-template)
-  // if (!isReactInstalled(appPackage) || template) {
-  console.log(`Installing react, react-dom using ${command}...`);
-  console.log();
+    // Install react and react-dom for backward compatibility with old CRA cli
+    // which doesn't install react and react-dom along with react-scripts
+    // or template is presetend (via --internal-testing-template)
+    // if (!isReactInstalled(appPackage) || template) {
+    console.log();
+    console.log(`Installing dependencies using ${command}...`);
 
-  const proc = spawn.sync(command, args, { stdio: 'inherit' });
-  if (proc.status !== 0) {
-    console.error(`\`${command} ${args.join(' ')}\` failed`);
-    return;
+    if (prodDependencies.length) {
+      // install PROD-dependencies from template dependencies
+      console.log();
+      console.log(
+        chalk.green(`⚑ ${prodDependencies.length} production dependencies...`)
+      );
+      const proc = spawn.sync(command, args, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${args.join(' ')}\` failed`);
+        return;
+      }
+    }
+    if (devDependencies.length) {
+      // install DEV-dependencies from template dependencies
+      console.log();
+      console.log(
+        chalk.green(`⚑ ${devDependencies.length} development dependencies...`)
+      );
+      const proc = spawn.sync(command, argsDev, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${argsDev.join(' ')}\` failed`);
+        return;
+      }
+    }
+    if (peerDependencies.length) {
+      // install PEER-dependencies from template dependencies
+      console.log();
+      console.log(
+        chalk.green(`⚑ ${peerDependencies.length} peer dependencies...`)
+      );
+      const proc = spawn.sync(command, argsPeer, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${argsPeer.join(' ')}\` failed`);
+        return;
+      }
+    }
+    if (optDependencies.length) {
+      // install OPTIONAL-dependencies from template dependencies
+      console.log();
+      console.log(
+        chalk.green(`⚑ ${optDependencies.length} optional dependencies...`)
+      );
+      const proc = spawn.sync(command, argsOpt, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${argsOpt.join(' ')}\` failed`);
+        return;
+      }
+    }
+    // }
   }
-  // }
 
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for

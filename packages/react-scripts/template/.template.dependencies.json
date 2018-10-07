@@ -1,14 +1,15 @@
 {
   "dependencies": {
     "classnames": "^2.2.6",
-    "flow-bin": "^0.80.0",
     "react-addons-shallow-compare": "^15.6.2",
-    "react-hot-loader": "latest",
     "react-redux": "latest",
     "react-router-dom": "latest",
-    "react-tap-event-plugin": "3.0.3",
     "redux": "latest",
     "redux-mock-store": "latest",
     "redux-thunk": "latest"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.81.0",
+    "react-hot-loader": "latest"
   }
 }

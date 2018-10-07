@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 // To "Code Splitting", be importing React-Router modules by like this.
 import BrowserRouter from 'react-router-dom/es/BrowserRouter';
 import HashRouter from 'react-router-dom/es/HashRouter';
@@ -28,13 +27,17 @@ const renderAppContainer = EntryApp => {
   );
 };
 
-// ========== 초기화 ==========
-const elHTML = document.querySelector('html');
-elHTML.setAttribute('ua', navigator.userAgent); // UA string 등록
-elHTML.setAttribute('lang', navigator.language); // lang string 등록
+/**
+ * ========== 초기화 ==========
+ */
+// Service-worker 등록
+registerServiceWorker();
 
-registerServiceWorker(); // Service-worker 등록
-injectTapEventPlugin(); // onTouchTap 이벤트의 polyfill
+// <html lang=""> 속성 미존재시 등록
+const elHTML = document.querySelector('html');
+if (!elHTML.getAttribute('lang')) {
+  elHTML.setAttribute('lang', navigator.language);
+}
 
 // Initialize App
 renderAppContainer(App);
