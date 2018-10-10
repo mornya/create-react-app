@@ -11,6 +11,7 @@
 const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
 const evalSourceMapMiddleware = require('react-dev-utils/evalSourceMapMiddleware');
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
+const path = require('path');
 const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const config = require('./webpack.config.dev');
 const paths = require('./paths');
@@ -72,13 +73,15 @@ module.exports = function(proxy, allowedHost) {
     publicPath: config.output.publicPath,
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.hooks[...].tap` calls above.
-    quiet: true,
+    quiet: false, // Modified by mornya
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebook/create-react-app/issues/293
     // src/node_modules is not ignored to support absolute imports
     // https://github.com/facebook/create-react-app/issues/1065
     watchOptions: {
       ignored: ignoredFiles(paths.appSrc),
+      aggregateTimeout: 300, // Added by mornya
+      poll: true, // Added by mornya
     },
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
     https: protocol === 'https',
@@ -108,6 +111,16 @@ module.exports = function(proxy, allowedHost) {
       // it used the same host and port.
       // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware());
+    },
+    // Below lines are added by mornya.
+    noInfo: false,
+    stats: {
+      assets: true,
+      children: false, // Hide console display built modules with childrens
+      chunks: false,
+      colors: true,
+      modules: false, // Hide console display built modules
+      publicPath: true,
     },
   };
 };

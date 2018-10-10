@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "react-addons-shallow-compare": "^15.6.2",
+    "react-redux": "latest",
+    "react-router-dom": "latest",
+    "redux": "latest",
+    "redux-mock-store": "latest",
+    "redux-thunk": "latest"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.81.0",
+    "react-hot-loader": "latest"
+  }
+}

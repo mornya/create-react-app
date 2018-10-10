@@ -15,17 +15,29 @@ process.on('unhandledRejection', err => {
   throw err;
 });
 
+const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
 const args = process.argv.slice(2);
 
 const scriptIndex = args.findIndex(
-  x => x === 'build' || x === 'eject' || x === 'start' || x === 'test'
+  x =>
+    x === 'build' ||
+    x === 'bundle' ||
+    x === 'transpile' ||
+    x === 'eject' ||
+    x === 'start' ||
+    x === 'test'
 );
 const script = scriptIndex === -1 ? args[0] : args[scriptIndex];
 const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : [];
 
+const scriptsVersion = require('../package.json').version;
+console.log(chalk.green('mornya-react-scripts'), `version ${scriptsVersion}\n`);
+
 switch (script) {
   case 'build':
+  case 'bundle':
+  case 'transpile':
   case 'eject':
   case 'start':
   case 'test': {

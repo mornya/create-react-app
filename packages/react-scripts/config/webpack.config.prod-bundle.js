@@ -111,15 +111,7 @@ const configuration = {
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the app code.
   entry: {
-    app: [paths.appIndexJs],
-    'vendor-boilerplate': [
-      'react',
-      'react-dom',
-      'react-redux',
-      'react-router-dom',
-      'redux',
-      'redux-thunk',
-    ],
+    index: [paths.appIndexJs],
   },
   output: {
     // The build folder.
@@ -127,8 +119,8 @@ const configuration = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: `${paths.staticPath}/js/[name].[chunkhash:8].js`,
-    chunkFilename: `${paths.staticPath}/js/[name].[chunkhash:8].chunk.js`,
+    filename: `[name].js`,
+    chunkFilename: `[name].[chunkhash:8].chunk.js`,
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -572,13 +564,21 @@ const configuration = {
   performance: false,
 };
 
-// 커스텀 엔트리 추가
-configuration.entry = Object.assign({}, configuration.entry, paths.appEntry);
+// 커스텀 엔트리 추가 (번들링용)
+const appEntries = {};
+if (paths.appEntry) {
+  console.log(Object.keys(paths.appEntry));
+  Object.keys(paths.appEntry).forEach(key => {
+    appEntries[key] = [`${paths.appSrc}/${paths.appEntry[key]}`];
+  });
+}
+
+configuration.entry = Object.assign({}, configuration.entry, appEntries);
 
 // CommonsChunkPlugin 추가 (bundle.js로 인해 entry.app -> entry.index로 변경)
 const entries = Object.keys(configuration.entry);
-const names = entries.filter(name => name !== 'app').reverse();
-names.push('app');
+const names = entries.filter(name => name !== 'index').reverse();
+names.push('index');
 configuration.plugins.push(
   new webpack.optimize.CommonsChunkPlugin({ names, minChunks: Infinity })
 );

@@ -81,9 +81,12 @@ module.exports = function(
   originalDirectory,
   template
 ) {
-  const ownPath = path.dirname(
-    require.resolve(path.join(__dirname, '..', 'package.json'))
-  );
+  //const ownPath = path.dirname(
+  //  require.resolve(path.join(__dirname, '..', 'package.json'))
+  //);
+  const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
+    .name;
+  const ownPath = path.join(appPath, 'node_modules', ownPackageName);
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = fs.existsSync(path.join(appPath, 'yarn.lock'));
 
@@ -94,9 +97,20 @@ module.exports = function(
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
+    bundle: 'react-scripts bundle',
+    transpile: 'react-scripts transpile src out',
+    lint:
+      'eslint src --cache --ignore-pattern .gitignore --ext js,jsx,mjs --max-warnings 100',
     test: 'react-scripts test',
     eject: 'react-scripts eject',
+    flow: 'node_modules/.bin/flow check',
+    'flow:start': 'node_modules/.bin/flow',
+    'flow:stop': 'node_modules/.bin/flow stop',
   };
+
+  // Setup values to make bundle (added by mornya)
+  appPackage.private = true; // not publish original bundle project if bundling
+  appPackage.license = 'MIT';
 
   // Setup the eslint config
   appPackage.eslintConfig = {
@@ -111,6 +125,7 @@ module.exports = function(
     JSON.stringify(appPackage, null, 2) + os.EOL
   );
 
+  // README.old.md will be restored on after copy process (by mornya)
   const readmeExists = fs.existsSync(path.join(appPath, 'README.md'));
   if (readmeExists) {
     fs.renameSync(
@@ -134,34 +149,60 @@ module.exports = function(
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
-  try {
-    fs.moveSync(
-      path.join(appPath, 'gitignore'),
-      path.join(appPath, '.gitignore'),
-      []
-    );
-  } catch (err) {
-    // Append if there's already a `.gitignore` file there
-    if (err.code === 'EEXIST') {
-      const data = fs.readFileSync(path.join(appPath, 'gitignore'));
-      fs.appendFileSync(path.join(appPath, '.gitignore'), data);
-      fs.unlinkSync(path.join(appPath, 'gitignore'));
-    } else {
-      throw err;
+  [
+    { from: 'babelrc', to: '.babelrc' },
+    { from: 'editorconfig', to: '.editorconfig' },
+    { from: 'eslintignore', to: '.eslintignore' },
+    { from: 'eslintrc', to: '.eslintrc' },
+    { from: 'flowconfig', to: '.flowconfig' },
+    { from: 'gitignore', to: '.gitignore' },
+    { from: 'README.md', to: 'README-CRA.md' },
+    { from: 'scsslint.yml', to: '.scsslint.yml' },
+  ].forEach(item => {
+    try {
+      fs.moveSync(
+        path.join(appPath, item.from),
+        path.join(appPath, item.to),
+        []
+      );
+    } catch (err) {
+      // Append if there's already file there
+      if (err.code === 'EEXIST') {
+        const data = fs.readFileSync(path.join(appPath, item.from));
+        fs.appendFileSync(path.join(appPath, item.to), data);
+        fs.unlinkSync(path.join(appPath, item.from));
+      } else {
+        throw err;
+      }
     }
+  });
+
+  // restore README.md (added by mornya)
+  if (readmeExists) {
+    fs.renameSync(
+      path.join(appPath, 'README.old.md'),
+      path.join(appPath, 'README.md')
+    );
   }
 
   let command;
-  let args;
+  let args, argsDev, argsPeer, argsOpt;
 
   if (useYarn) {
     command = 'yarnpkg';
-    args = ['add'];
+    args = ['add', verbose && '--verbose'].filter(e => e);
+    argsDev = [...args, '-D'];
+    argsPeer = [...args, '-P'];
+    argsOpt = [...args, '-O'];
   } else {
     command = 'npm';
-    args = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    args = ['install', verbose && '--verbose'].filter(e => e);
+    argsDev = [...args, '--save-dev'];
+    argsPeer = [...args, '--save-prod']; // not supported (npm v6.4.1)
+    argsOpt = [...args, '--save-optional'];
+    args.push('--save');
   }
-  args.push('react', 'react-dom');
+  args.push('react', 'react-dom', 'prop-types');
 
   // Install additional template dependencies, if present
   const templateDependenciesPath = path.join(
@@ -169,27 +210,87 @@ module.exports = function(
     '.template.dependencies.json'
   );
   if (fs.existsSync(templateDependenciesPath)) {
-    const templateDependencies = require(templateDependenciesPath).dependencies;
-    args = args.concat(
-      Object.keys(templateDependencies).map(key => {
-        return `${key}@${templateDependencies[key]}`;
-      })
+    const templateDependencies = require(templateDependenciesPath);
+    const prodDependencies = Object.entries(
+      templateDependencies.dependencies || {}
     );
+    const devDependencies = Object.entries(
+      templateDependencies.devDependencies || {}
+    );
+    const peerDependencies = Object.entries(
+      templateDependencies.peerDependencies || {}
+    );
+    const optDependencies = Object.entries(
+      templateDependencies.optionalDependencies || {}
+    );
+
+    prodDependencies.length &&
+      prodDependencies.forEach(([k, v]) => args.push(`${k}@${v}`));
+    devDependencies.length &&
+      devDependencies.forEach(([k, v]) => argsDev.push(`${k}@${v}`));
+    peerDependencies.length &&
+      peerDependencies.forEach(([k, v]) => argsPeer.push(`${k}@${v}`));
+    optDependencies.length &&
+      optDependencies.forEach(([k, v]) => argsOpt.push(`${k}@${v}`));
+
     fs.unlinkSync(templateDependenciesPath);
-  }
 
-  // Install react and react-dom for backward compatibility with old CRA cli
-  // which doesn't install react and react-dom along with react-scripts
-  // or template is presetend (via --internal-testing-template)
-  if (!isReactInstalled(appPackage) || template) {
-    console.log(`Installing react and react-dom using ${command}...`);
+    // Install react and react-dom for backward compatibility with old CRA cli
+    // which doesn't install react and react-dom along with react-scripts
+    // or template is presetend (via --internal-testing-template)
+    // if (!isReactInstalled(appPackage) || template) {
     console.log();
+    console.log(`Installing dependencies using ${command}...`);
 
-    const proc = spawn.sync(command, args, { stdio: 'inherit' });
-    if (proc.status !== 0) {
-      console.error(`\`${command} ${args.join(' ')}\` failed`);
-      return;
+    if (prodDependencies.length) {
+      // install PROD-dependencies from template dependencies
+      console.log();
+      console.log(
+        chalk.green(`⚑ ${prodDependencies.length} production dependencies...`)
+      );
+      const proc = spawn.sync(command, args, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${args.join(' ')}\` failed`);
+        return;
+      }
     }
+    if (devDependencies.length) {
+      // install DEV-dependencies from template dependencies
+      console.log();
+      console.log(
+        chalk.green(`⚑ ${devDependencies.length} development dependencies...`)
+      );
+      const proc = spawn.sync(command, argsDev, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${argsDev.join(' ')}\` failed`);
+        return;
+      }
+    }
+    if (peerDependencies.length) {
+      // install PEER-dependencies from template dependencies
+      console.log();
+      console.log(
+        chalk.green(`⚑ ${peerDependencies.length} peer dependencies...`)
+      );
+      const proc = spawn.sync(command, argsPeer, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${argsPeer.join(' ')}\` failed`);
+        return;
+      }
+    }
+    if (optDependencies.length) {
+      // install OPTIONAL-dependencies from template dependencies
+      console.log();
+      console.log(
+        chalk.green(`⚑ ${optDependencies.length} optional dependencies...`)
+      );
+      const proc = spawn.sync(command, argsOpt, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${argsOpt.join(' ')}\` failed`);
+        return;
+      }
+    }
+    // }
   }
 
   if (tryGitInit(appPath)) {

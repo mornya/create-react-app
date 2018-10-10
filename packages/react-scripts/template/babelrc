@@ -1,0 +1,38 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false,
+        "targets": {
+          "node": "current",
+          "browsers": [
+            "> 1%",
+            "last 2 versions",
+            "not ie <= 8"
+          ],
+          "useBuiltIns": "usage"
+        }
+      }
+    ],
+    "react-app",
+    "flow",
+    "minify"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "env"
+      ],
+      "plugins": [
+		[
+		  "module-resolver",
+		  {
+		    "root": [ "./src/**" ]
+		  }
+		],
+        "istanbul"
+      ]
+    }
+  }
+}
