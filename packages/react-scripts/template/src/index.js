@@ -19,7 +19,7 @@ const renderAppContainer = EntryApp => {
     <AppContainer>
       <Provider store={Store}>
         <Router>
-          <EntryApp />
+          <EntryApp/>
         </Router>
       </Provider>
     </AppContainer>,

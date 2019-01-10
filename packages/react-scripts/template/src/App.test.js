@@ -9,7 +9,7 @@ describe('App Test', () => {
     const div = document.createElement('div');
     ReactDOM.render(
       <Provider store={Store}>
-        <App />
+        <App/>
       </Provider>,
       div
     );
