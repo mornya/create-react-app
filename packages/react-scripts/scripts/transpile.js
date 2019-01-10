@@ -39,6 +39,7 @@ async function transform(file, src, dest, callback = {}) {
   const filename = path.join(src, file);
   const content = await fs.readFile(filename);
   const destpath = path.join(dest, file);
+  console.log(file);
   const { code } = babel.transform(content.toString(), {
     extends: path.resolve('.babelrc'),
     filename,

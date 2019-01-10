@@ -18,7 +18,9 @@ if (process.env.NODE_ENV === 'test') {
     return applyMiddleware(...middlewares)(createStore)(
       reducers,
       initialState || window.__initialState__,
-      window.devToolsExtension ? window.devToolsExtension() : f => f
+      window.__REDUX_DEVTOOLS_EXTENSION__
+        ? window.__REDUX_DEVTOOLS_EXTENSION__()
+        : f => f
     );
   })();
 }

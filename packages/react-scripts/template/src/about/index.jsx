@@ -26,6 +26,7 @@ class About extends Component {
 }
 
 About.propTypes = {
+  history: PropTypes.object,
   pageView: PropTypes.number,
   addPageView: PropTypes.func.isRequired,
 };

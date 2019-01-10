@@ -66,24 +66,6 @@ npm run clean
 npm run lint
 ```
 
-##### Flow Type Check
-
-```bash
-npm run flow
-```
-
-##### Start Flow Type server
-
-```bash
-npm run flow:start
-```
-
-##### Stop Flow Type server
-
-```bash
-npm run flow:stop
-```
-
 ##### Eject all CRA configuration
 
 - Removes this tool and copies build dependencies, configuration files

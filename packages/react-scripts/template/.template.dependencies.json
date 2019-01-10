@@ -9,7 +9,6 @@
     "redux-thunk": "latest"
   },
   "devDependencies": {
-    "flow-bin": "^0.81.0",
     "react-hot-loader": "latest"
   }
 }

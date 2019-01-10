@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-class Home extends React.Component {
+class Home extends Component {
   render() {
     return (
       <>
@@ -14,5 +15,9 @@ class Home extends React.Component {
     );
   }
 }
+
+Home.propTypes = {
+  history: PropTypes.object,
+};
 
 export default withRouter(Home);

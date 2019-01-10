@@ -21,6 +21,7 @@ const execSync = require('child_process').execSync;
 const spawn = require('react-dev-utils/crossSpawn');
 const { defaultBrowsers } = require('react-dev-utils/browsersHelper');
 const os = require('os');
+const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
 
 function isInGitRepository() {
   try {
@@ -93,19 +94,18 @@ module.exports = function(
   // Copy over some of the devDependencies
   appPackage.dependencies = appPackage.dependencies || {};
 
+  const useTypeScript = appPackage.dependencies['typescript'] != null;
+
   // Setup the script rules
   appPackage.scripts = {
     start: 'react-scripts start',
     build: 'react-scripts build',
     bundle: 'react-scripts bundle',
-    transpile: 'react-scripts transpile src out',
+    transpile: 'react-scripts transpile out',
     lint:
       'eslint src --cache --ignore-pattern .gitignore --ext js,jsx,mjs --max-warnings 100',
     test: 'react-scripts test',
     eject: 'react-scripts eject',
-    flow: 'node_modules/.bin/flow check',
-    'flow:start': 'node_modules/.bin/flow',
-    'flow:stop': 'node_modules/.bin/flow stop',
   };
 
   // Setup values to make bundle (added by mornya)
@@ -137,7 +137,7 @@ module.exports = function(
   // Copy the files for the user
   const templatePath = template
     ? path.resolve(originalDirectory, template)
-    : path.join(ownPath, 'template');
+    : path.join(ownPath, useTypeScript ? 'template-typescript' : 'template');
   if (fs.existsSync(templatePath)) {
     fs.copySync(templatePath, appPath);
   } else {
@@ -154,7 +154,6 @@ module.exports = function(
     { from: 'editorconfig', to: '.editorconfig' },
     { from: 'eslintignore', to: '.eslintignore' },
     { from: 'eslintrc', to: '.eslintrc' },
-    { from: 'flowconfig', to: '.flowconfig' },
     { from: 'gitignore', to: '.gitignore' },
     { from: 'README.md', to: 'README-CRA.md' },
     { from: 'scsslint.yml', to: '.scsslint.yml' },
@@ -291,6 +290,10 @@ module.exports = function(
       }
     }
     // }
+  }
+
+  if (useTypeScript) {
+    verifyTypeScriptSetup();
   }
 
   if (tryGitInit(appPath)) {

@@ -30,7 +30,7 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={logo} className="App-logo" alt="logo"/>
         <h1 className="App-title">mornya-react-scripts</h1>
         <p>Welcome! It&apos;s A customized UI boilerplate created by <b>mornya</b></p>
         <p>To get started, edit <code>src/App.jsx</code> and save to reload.</p>

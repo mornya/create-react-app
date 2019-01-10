@@ -16,7 +16,6 @@
       }
     ],
     "react-app",
-    "flow",
     "minify"
   ],
   "env": {

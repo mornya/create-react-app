@@ -77,8 +77,12 @@
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "./config/webpack.config.prod.js"
+        "config": "./config/webpack.config.js"
       }
+    },
+    "react": {
+      "pragma": "React",
+      "version": "detect"
     }
   }
 }

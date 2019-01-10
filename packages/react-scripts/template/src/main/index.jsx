@@ -10,7 +10,7 @@ class Main extends Component {
         </p>
         <p>
           <code>React v16</code>
-          <code>FlowType</code>
+          <code>TypeScript</code>
           <code>Redux</code>
           <code>ReduxThunk</code>
           <code>Router v4</code>
